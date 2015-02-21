@@ -1,18 +1,17 @@
 package com.schoenberg;
 
 import org.jfugue.*;
+
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.io.File;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 class App {
 	public static void main(String[] args) {
-		Player player = new Player();
-		Pattern pattern = new Pattern("C D E F G A B");
-		try {
-			pattern = player.loadMidi(new File("schoenberg.mid"));
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println(pattern.getMusicString());
-		player.play(pattern);
+		Corpus corpus = new Corpus();
+		corpus.build(new File("./midis/"));
+		//System.out.println(pattern.getMusicString());
+		System.exit(0);
 	}
 }
