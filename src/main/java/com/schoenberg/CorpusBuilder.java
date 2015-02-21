@@ -10,10 +10,11 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 
 class Corpus {
 
-	public HashMap<String, Object> corpus = new HashMap<String, Object>();
+	public ArrayList<ArrayList<Pattern>> corpus = new ArrayList<ArrayList<Pattern>>();
 	
 	public Corpus() {
 	}
@@ -21,6 +22,7 @@ class Corpus {
 	public void build(File dir) {
 		Gson gson = new Gson();
 		Player player = new Player();
+		ArrayList<ArrayList<Pattern>> toIns = new ArrayList<ArrayList<Pattern>>();
 		FileWriter corpusFile = null;
 		try {corpusFile = new FileWriter("corpus/schoenberg.corpus", true);}catch(Exception e){}
 		for(File f : dir.listFiles()) {
@@ -32,17 +34,18 @@ class Corpus {
 			parser.parse(p);	
 			spl.getSong().clean();
 			spl.getSong().sort();
-			try {
-				corpusFile.write(gson.toJson(spl.getSong().getOrderedTokens()));
-			} catch(Exception e) {}
+			toIns.add(spl.getSong().getOrderedTokens());
 		}
-		corpusFile.close();
+		try {
+			corpusFile.write(gson.toJson(toIns));
+			corpusFile.close();
+		} catch(Exception e) {}
 	}
-	public void load(File dir) {
+	public void load(File file) {
 		Gson gson = new Gson();
 		try {
-			String fileText = Files.toString(dir, Charsets.UTF_8);
-			corpus=(HashMap<String,Object>) gson.fromJson(fileText, corpus.getClass());
+			String fileText = Files.toString(file, Charsets.UTF_8);
+			corpus=(ArrayList<ArrayList<Pattern>>) gson.fromJson(fileText, corpus.getClass());
 			System.out.println(gson.toJson(corpus));
 			System.out.println(corpus);
 		} catch(Exception e) {
