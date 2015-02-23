@@ -5,7 +5,11 @@ import org.jfugue.*;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
+import java.lang.reflect.Type;
+
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
 import java.io.File;
@@ -19,12 +23,13 @@ class Corpus {
 	public Corpus() {
 	}
 
-	public void build(File dir) {
+	public void build(File dir, File save) {
 		Gson gson = new Gson();
 		Player player = new Player();
 		ArrayList<ArrayList<Pattern>> toIns = new ArrayList<ArrayList<Pattern>>();
 		FileWriter corpusFile = null;
-		try {corpusFile = new FileWriter("corpus/schoenberg.corpus", true);}catch(Exception e){}
+		if(save.exists()){return;}
+		try {corpusFile = new FileWriter(save);}catch(Exception e){}
 		for(File f : dir.listFiles()) {
 			Pattern p = new Pattern();
 			SchoenbergParserListener spl = new SchoenbergParserListener();
@@ -45,11 +50,21 @@ class Corpus {
 		Gson gson = new Gson();
 		try {
 			String fileText = Files.toString(file, Charsets.UTF_8);
-			corpus=(ArrayList<ArrayList<Pattern>>) gson.fromJson(fileText, corpus.getClass());
-			System.out.println(gson.toJson(corpus));
-			System.out.println(corpus);
+			Type type = new TypeToken<ArrayList<ArrayList<Pattern>>>(){}.getType();
+			corpus=(ArrayList<ArrayList<Pattern>>) gson.fromJson(fileText, type);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public ArrayList<ArrayList<Pattern>> getCorpus() {
+		return corpus;
+	}
+
+	public Pattern getPattern(int song, int index) {
+		Gson gson = new Gson();
+		Type type = new TypeToken<ArrayList<Pattern>>(){}.getType();
+		Pattern pattern = new Pattern(corpus.get(song).get(index).getMusicString());
+		return pattern;
 	}
 }

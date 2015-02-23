@@ -30,4 +30,30 @@
 	<version>2.3.1</version>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>appassembler-maven-plugin</artifactId>
+        <version>1.6</version>
+        <configuration>
+          <programs>
+            <program>
+              <mainClass>com.schoenberg.App</mainClass>
+              <id>schoenberg</id>
+            </program>
+          </programs>
+        </configuration>
+      </plugin>
+	<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-compiler-plugin</artifactId>
+		<version>2.3.1</version>
+		<configuration>
+		<source>1.6</source>
+		<target>1.6</target>
+		</configuration>
+	</plugin>
+    </plugins>
+  </build>
 </project>

@@ -13,7 +13,7 @@ class Song {
 	}
 
 	private ArrayList<Object> tokens = new ArrayList<Object>();
-	private ArrayList<Pattern> orderedTokens = new ArrayList<Pattern>();
+	public ArrayList<Pattern> orderedTokens = new ArrayList<Pattern>();
 
 	public void add(Object o) {
 		if(o instanceof Note) {
@@ -89,8 +89,6 @@ class Song {
 
 	public String toString() {
 		String listString = "";
-		clean();
-		sort();
 		for (Pattern o : orderedTokens) {
 			listString += o.getMusicString() + " ";
 		}
