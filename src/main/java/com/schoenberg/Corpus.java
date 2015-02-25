@@ -36,7 +36,11 @@ class Corpus {
 			try {p = player.loadMidi(f);}catch(Exception e){}
 			MusicStringParser parser = new MusicStringParser();
 			parser.addParserListener(spl);
-			parser.parse(p);	
+			try {
+				parser.parse(p);	
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 			spl.getSong().clean();
 			spl.getSong().sort();
 			toIns.add(spl.getSong().getOrderedTokens());

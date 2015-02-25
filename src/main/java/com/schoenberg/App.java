@@ -30,6 +30,7 @@ class App {
 			Player player = new Player();
 			try {
 				player.saveMidi(new Pattern(generated.toString()), new File(toFile));
+				System.out.println("Saved midi to " + toFile);
 			} catch(Exception e) {
 				System.out.println("Error saving midi");
 				e.printStackTrace();

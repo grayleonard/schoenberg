@@ -3,7 +3,9 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 target/
+corpus/*
 generated/*
+midis/*
 
 # Package Files #
 *.war
