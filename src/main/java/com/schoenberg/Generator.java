@@ -11,7 +11,7 @@ import java.lang.Long;
 class Generator {
 
 	Corpus corpus = null;
-	int prefix_len = 3;
+	int prefix_len = 4;
 	Time curr = new Time(0);
 
 	Random r = new Random();
@@ -35,7 +35,8 @@ class Generator {
 		ArrayList<Pattern> generated = new ArrayList<Pattern>();
 
 		//Initialize the curr_notes array
-		for(int i = 0; i < prefix_len; i++) {
+		curr_notes.add(getRandomNote());
+		for(int i = 0; i < prefix_len - 1; i++) {
 			curr_notes.add(getRandomNextNote(curr_notes));
 			generated.add(curr_notes.get(i));
 		}
@@ -44,13 +45,19 @@ class Generator {
 		for(int j = 0; j < max_notes; j++) {
 			// Push onto the array a markov-determined note
 			Pattern new_note = getRandomNextNote(curr_notes);
-			System.out.println("Adding new note" + new_note);
-			curr_notes.add(new_note);
+			if(new_note == null) {
+				curr_notes = getNewPrefix();
+				j = j--;
+			}
+			else {
+				System.out.println("Adding new note" + new_note);
+				curr_notes.add(new_note);
 
-			// Pop the first element from the array
-			curr_notes.remove(0);
-			generated.add(new_note);
-			generated.add(getRandomTimeStep());
+				// Pop the first element from the array
+				curr_notes.remove(0);
+				generated.add(new_note);
+				generated.add(getRandomTimeStep());
+			}
 		}
 		Player player = new Player();
 		Song gen_song = new Song();
@@ -79,7 +86,7 @@ class Generator {
 				for(int j = 1; j < prefix.size(); j++) {
 					try {
 						String ent = entry.get(i-j).getMusicString().split("/")[0];
-						String pre = prefix.get(prefix.size()-j-1).getMusicString().split("/")[0];
+						String pre = prefix.get(prefix.size()-j).getMusicString().split("/")[0];
 						if(!ent.equalsIgnoreCase(pre)) {
 							shouldAdd = false;
 							break;
@@ -95,12 +102,22 @@ class Generator {
 			}
 		}
 		if(suffixes.size() == 0) {
-			System.out.println("Returning random note");
-			return getRandomNote();
+			return null;	
 		}
-		Pattern toReturn = suffixes.get(r.nextInt(suffixes.size()));
-		while(toReturn.getMusicString().equals(""))
-			toReturn = getRandomNote();
+		Pattern suffix = suffixes.get(r.nextInt(suffixes.size()));
+		while(suffixes == null)
+			suffix = suffixes.get(r.nextInt(suffixes.size()));
+
+		return suffix;
+	}
+
+	public ArrayList<Pattern> getNewPrefix() {
+		System.out.println("Getting new prefix");
+		ArrayList<Pattern> toReturn = new ArrayList<Pattern>();
+		toReturn.add(getRandomNote());
+		for(int i = 0; i < prefix_len; i++) {
+			toReturn.add(getRandomNextNote(toReturn));
+		}
 		return toReturn;
 	}
 
