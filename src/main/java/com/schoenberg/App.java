@@ -25,7 +25,7 @@ class App {
 			String corpusFile = args[1];
 			String toFile = "generated/" + System.currentTimeMillis() / 1000L + ".mid";
 			corpus.load(new File(corpusFile));
-			Generator generator = new Generator(corpus);
+			Generator generator = new Generator(corpus, Integer.parseInt(args[2]));
 			Song generated = generator.generate();
 			Player player = new Player();
 			try {

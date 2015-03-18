@@ -11,14 +11,15 @@ import java.lang.Long;
 class Generator {
 
 	Corpus corpus = null;
-	int prefix_len = 4;
+	int prefix_len = 3;
 	Time curr = new Time(0);
-
+	int tempo = 0;
 	Random r = new Random();
 	int max_notes = 50 + r.nextInt(80);
 
-	public Generator(Corpus corpus) {
+	public Generator(Corpus corpus, int tempo) {
 		this.corpus = corpus;
+		this.tempo = tempo;
 	}
 
 
@@ -72,7 +73,7 @@ class Generator {
 		if(rand >= 50) {
 			rand = (long)Math.floor(rand / 4);
 		}
-		rand = 25;
+		rand = tempo;
 		curr.setTime(curr.getTime() + rand);
 		return new Pattern(curr.getMusicString());
 	}
