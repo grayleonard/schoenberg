@@ -4,7 +4,7 @@
 
 ##Description
 
-Schoenberg is a music generator using Markov Models.  It works in two stages: first, existing MIDI files are compiled into a designated corpus, which contains all the notes in sequential order.  Second, a Markov-based random song is generated using a designated corpus.
+Schoenberg is a music generator using Markov Models.  It works in two stages: first, existing MIDI files are compiled into a designated corpus, which contains all the notes in sequential order.  Second, a Markov-based random song is generated using the corpus.
 
 ##Requirements
 
@@ -31,4 +31,5 @@ where 20 is the time in millseconds between notes.
 The generated song is both played by schoenberg after generation and outputted to the folder 'generated/'.  It's name is its creation timestamp.
 
 Play MIDI file:
+
 `./target/appassembler/bin/schoenberg play generated/file.mid`
