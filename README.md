@@ -1,24 +1,34 @@
 # schoenberg
 
+![Schoenberg](http://www.emmanuelmusic.org/images/cal_tix/schoenberg_schiele.jpg)
+
+##Description
+
+Schoenberg is a music generator using Markov Models.  It works in two stages: first, existing MIDI files are compiled into a designated corpus, which contains all the notes in sequential order.  Second, a Markov-based random song is generated using a designated corpus.
+
 ##Requirements
-===
-java 1.6
-maven
+
+* Java 1.6
+
+* Maven (all other dependencies are downloaded through Maven's pom.xml file)
 
 ##How to
-===
-compile
+
+Compile:
+
 `mvn package appassembler:assemble`
 
-build corpus
+Build corpus:
+
 `./target/appassembler/bin/schoenberg build midi/folder output.corpus`
 
-generate song
+Generate song:
+
 `./target/appassembler/bin/schoenberg generate example.corpus 20`
 
-20 is the time between notes
+where 20 is the time in millseconds between notes.
 
-song is outputted to the generated folder, with the timestamp as its name
+The generated song is both played by schoenberg after generation and outputted to the folder 'generated/'.  It's name is its creation timestamp.
 
-playback midi
+Play MIDI file:
 `./target/appassembler/bin/schoenberg play generated/file.mid`
