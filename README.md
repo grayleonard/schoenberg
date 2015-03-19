@@ -12,7 +12,7 @@ Schoenberg is a music generator using Markov Models.  It works in two stages: fi
 
 * Maven (all other dependencies are downloaded through Maven's pom.xml file)
 
-##How to
+##Usage
 
 Compile:
 
