@@ -11,6 +11,9 @@ Schoenberg is a music generator using Markov Models.  It works in two stages: fi
 * Java 1.6
 
 * Maven (all other dependencies are downloaded through Maven's pom.xml file)
+  * JFugue
+  * Google Guava
+  * Google Gson
 
 ##Usage
 
